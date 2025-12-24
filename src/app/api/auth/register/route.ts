@@ -1,0 +1,8 @@
+import { NextRequest } from 'next/server';
+import { AuthController } from '@/lib/modules/auth/AuthController';
+
+const authController = new AuthController();
+
+export async function POST(req: NextRequest) {
+  return authController.register(req);
+}
