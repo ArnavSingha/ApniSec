@@ -4,7 +4,7 @@ This is a full-stack Next.js application designed as a comprehensive platform fo
 
 ## Deployed Application URL
 
-You can access the live application here: [**Your Deployed URL**](https://your-app-url.com) _(Replace with your actual URL)_
+You can access the live application here: [**Your Deployed URL**](https://apnisec007.netlify.app/) _(https://apnisec007.netlify.app/)_
 
 ## Key Features
 
