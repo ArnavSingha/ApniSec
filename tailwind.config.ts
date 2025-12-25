@@ -104,12 +104,21 @@ export default {
             opacity: '0.9',
             boxShadow: '0 0 15px hsl(var(--primary)), 0 0 25px hsl(var(--primary))'
           },
-        }
+        },
+        scroll: {
+          from: {
+            transform: 'translateX(0)',
+          },
+          to: {
+            transform: 'translateX(-100%)',
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'pulse-glow': 'pulse-glow 3s infinite ease-in-out',
+        'scroll': 'scroll 120s linear infinite',
       },
     },
   },

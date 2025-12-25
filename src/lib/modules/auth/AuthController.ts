@@ -62,4 +62,26 @@ export class AuthController {
             return ApiResponse.handle(error);
         }
     }
+
+    /**
+     * Handles the user logout request.
+     * @returns A Next.js response object clearing the access token cookie.
+     */
+    public async logout() {
+        try {
+            const response = ApiResponse.success({}, 'Logout successful');
+
+            // Set the cookie with an immediate expiration date to remove it
+            response.cookies.set('accessToken', '', {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                path: '/',
+                maxAge: -1,
+            });
+
+            return response;
+        } catch (error) {
+            return ApiResponse.handle(error);
+        }
+    }
 }

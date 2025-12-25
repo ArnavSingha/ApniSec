@@ -3,8 +3,14 @@
     {
       "id": "hero-security",
       "description": "Abstract network security concept with glowing lines",
-      "imageUrl": "https://images.unsplash.com/photo-1761284669171-f84d64496ecf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxzZWN1cml0eSUyMGFic3RyYWN0fGVufDB8fHx8MTc2NjUyMjg4Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1761070781270-af7d88a0b1a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzZWN1cml0eSUyMGFic3RyYWN0fGVufDB8fHx8MTc2NjUyMjg4Mnww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "security abstract"
+    },
+    {
+      "id": "dashboard-dark",
+      "description": "ApniSec security dashboard with various charts and metrics",
+      "imageUrl": "https://assets.apnisec.com/public/apnisec-ui/home/dashboard.svg",
+      "imageHint": "dark dashboard"
     }
   ]
 }

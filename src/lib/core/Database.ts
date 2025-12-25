@@ -1,3 +1,4 @@
+
 import mongoose, { Mongoose } from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -61,18 +62,23 @@ export class Database {
         bufferCommands: false,
       };
 
-      this.connectionPromise = mongoose.connect(MONGODB_URI!, opts);
+      console.log('Attempting to connect to MongoDB...');
+      this.connectionPromise = mongoose.connect(MONGODB_URI!, opts).then((mongooseInstance) => {
+        console.log('MongoDB connection successful.');
+        return mongooseInstance;
+      });
       global.mongooseCache.promise = this.connectionPromise;
     }
 
     try {
       this.connection = await this.connectionPromise;
       global.mongooseCache.conn = this.connection;
-    } catch (e) {
+    } catch (e: any) {
       // If connection fails, clear the promise to allow for a retry.
       this.connectionPromise = null;
       global.mongooseCache.promise = null;
-      throw e;
+      console.error('MongoDB connection failed:', e.message);
+      throw e; // Re-throw the original error after logging
     }
 
     return this.connection;
