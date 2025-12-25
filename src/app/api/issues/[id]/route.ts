@@ -10,8 +10,9 @@ const issueController = new IssueController();
  * @param params - The route parameters, containing the issue ID.
  * @returns A NextResponse object.
  */
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
-  return issueController.getById(req, params.id);
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  return issueController.getById(req, id);
 }
 
 /**
@@ -20,8 +21,9 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
  * @param params - The route parameters, containing the issue ID.
  * @returns A NextResponse object.
  */
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
-  return issueController.update(req, params.id);
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  return issueController.update(req, id);
 }
 
 /**
@@ -30,6 +32,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
  * @param params - The route parameters, containing the issue ID.
  * @returns A NextResponse object.
  */
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
-  return issueController.delete(req, params.id);
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  return issueController.delete(req, id);
 }

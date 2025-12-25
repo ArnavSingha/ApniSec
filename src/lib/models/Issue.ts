@@ -3,7 +3,7 @@ import mongoose, { Schema, Document, Types } from 'mongoose';
 // Define the TypeScript interface for the Issue document
 export interface IIssue extends Document {
   title: string;
-  type: 'Cloud Security' | 'Reteam Assessment' | 'VAPT';
+  type: 'Cloud Security' | 'RedTeam Assessment' | 'VAPT';
   description: string;
   priority?: string;
   status: string;
@@ -21,7 +21,7 @@ const IssueSchema: Schema = new Schema(
     },
     type: {
       type: String,
-      enum: ['Cloud Security', 'Reteam Assessment', 'VAPT'],
+      enum: ['Cloud Security', 'RedTeam Assessment', 'VAPT'],
       required: [true, 'Issue type is required'],
     },
     description: {

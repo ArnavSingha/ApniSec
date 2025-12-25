@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -20,7 +20,7 @@ const resetPasswordSchema = z.object({
   path: ["confirmPassword"],
 });
 
-export default function ResetPasswordPage() {
+function ResetPasswordForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [token, setToken] = useState<string | null>(null);
@@ -78,81 +78,91 @@ export default function ResetPasswordPage() {
 
   if (isSuccess) {
     return (
-      <main className="flex items-center justify-center min-h-screen p-4 bg-background">
-        <Card className="w-full max-w-md glass-panel">
-            <CardHeader>
-                <CardTitle className="text-2xl font-bold font-headline text-center">Password Reset Successful</CardTitle>
-            </CardHeader>
-            <CardContent>
-                <Alert>
-                    <AlertDescription>
-                        Your password has been changed successfully. You will be redirected to the dashboard shortly.
-                    </AlertDescription>
-                </Alert>
-            </CardContent>
-        </Card>
-      </main>
+      <Card className="w-full max-w-md glass-panel">
+          <CardHeader>
+              <CardTitle className="text-2xl font-bold font-headline text-center">Password Reset Successful</CardTitle>
+          </CardHeader>
+          <CardContent>
+              <Alert>
+                  <AlertDescription>
+                      Your password has been changed successfully. You will be redirected to the dashboard shortly.
+                  </AlertDescription>
+              </Alert>
+          </CardContent>
+      </Card>
     );
   }
 
   return (
-    <main className="flex items-center justify-center min-h-screen p-4 bg-background">
-      <Card className="w-full max-w-md glass-panel">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold font-headline text-center">Reset Your Password</CardTitle>
-          <CardDescription className="text-center">Enter your new password below.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              {error && (
-                <Alert variant="destructive">
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
+    <Card className="w-full max-w-md glass-panel">
+      <CardHeader>
+        <CardTitle className="text-2xl font-bold font-headline text-center">Reset Your Password</CardTitle>
+        <CardDescription className="text-center">Enter your new password below.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            {error && (
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+            {!token && !isSuccess && (
+                <div className='text-center text-sm'>
+                    <p className='text-destructive mb-2'>{error}</p>
+                    <Link href="/forgot-password" className="text-primary hover:underline">
+                      Request a new link
+                    </Link>
+                </div>
+            )}
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>New Password</FormLabel>
+                  <FormControl>
+                    <Input type="password" placeholder="********" {...field} disabled={!token} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )}
-              {!token && !isSuccess && (
-                  <div className='text-center text-sm'>
-                      <p className='text-destructive mb-2'>{error}</p>
-                      <Link href="/forgot-password" className="text-primary hover:underline">
-                        Request a new link
-                      </Link>
-                  </div>
+            />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm New Password</FormLabel>
+                  <FormControl>
+                    <Input type="password" placeholder="********" {...field} disabled={!token} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )}
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>New Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" placeholder="********" {...field} disabled={!token} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="confirmPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Confirm New Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" placeholder="********" {...field} disabled={!token} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" className="w-full" disabled={isLoading || !token}>
-                {isLoading ? 'Resetting...' : 'Reset Password'}
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
-    </main>
+            />
+            <Button type="submit" className="w-full" disabled={isLoading || !token}>
+              {isLoading ? 'Resetting...' : 'Reset Password'}
+            </Button>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   );
 }
 
-    
+export default function ResetPasswordPage() {
+  return (
+    <main className="flex items-center justify-center min-h-screen p-4 bg-background">
+      <Suspense fallback={
+        <Card className="w-full max-w-md glass-panel">
+          <CardHeader>
+            <CardTitle className="text-2xl font-bold font-headline text-center">Loading...</CardTitle>
+          </CardHeader>
+        </Card>
+      }>
+        <ResetPasswordForm />
+      </Suspense>
+    </main>
+  );
+}

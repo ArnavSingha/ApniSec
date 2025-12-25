@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack -p 9002",
     "genkit:dev": "genkit start -- tsx src/ai/dev.ts",
     "genkit:watch": "genkit start -- tsx --watch src/ai/dev.ts",
-    "build": "NODE_ENV=production next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
@@ -60,6 +60,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.15.3",
     "@types/bcryptjs": "^2.4.6",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^20",

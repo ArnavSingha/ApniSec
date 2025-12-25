@@ -9,7 +9,7 @@ import 'dotenv/config';
 
 interface CreateIssueData {
   title: string;
-  type: 'Cloud Security' | 'Reteam Assessment' | 'VAPT';
+  type: 'Cloud Security' | 'RedTeam Assessment' | 'VAPT';
   description: string;
   priority?: string;
   status?: string;
