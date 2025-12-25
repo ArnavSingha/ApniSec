@@ -31,11 +31,8 @@ You can access the live application here: [**Your Deployed URL**](https://apnise
 
 The application is optimized for search engines, achieving high performance, accessibility, and SEO scores. Below are the Lighthouse scores for the live production deployment.
 
-### Desktop Score
-![Desktop SEO Score](https://via.placeholder.com/800x400.png/224719/FFFFFF?text=Replace+with+Desktop+SEO+Score+Screenshot)
-
-### Mobile Score
-![Mobile SEO Score](https://via.placeholder.com/800x400.png/224719/FFFFFF?text=Replace+with+Mobile+SEO+Score+Screenshot)
+### Desktop Score & Mobile Score
+![Desktop SEO Score](https://github.com/ArnavSingha/ApniSec/blob/main/seo.jpeg)
 
 ## Tech Stack
 
