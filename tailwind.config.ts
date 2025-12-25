@@ -16,6 +16,9 @@ export default {
       },
     },
     extend: {
+      gridTemplateColumns: {
+        '30': 'repeat(30, minmax(0, 1fr))',
+      },
       fontFamily: {
         body: ['Inter', 'sans-serif'],
         headline: ['"Space Grotesk"', 'sans-serif'],

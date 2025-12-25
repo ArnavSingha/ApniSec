@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { ApiError } from './ApiError';
 
 type ResponseData = Record<string, any>;
+type ResponseHeaders = Record<string, string>;
 
 export class ApiResponse {
     
@@ -14,7 +15,8 @@ export class ApiResponse {
     static success(
         data: ResponseData,
         message: string = "Success",
-        statusCode: number = 200
+        statusCode: number = 200,
+        headers: ResponseHeaders = {}
     ): NextResponse {
         return NextResponse.json(
             {
@@ -22,7 +24,7 @@ export class ApiResponse {
                 message,
                 data,
             },
-            { status: statusCode }
+            { status: statusCode, headers }
         );
     }
 
@@ -31,14 +33,14 @@ export class ApiResponse {
      * @param error - An instance of ApiError.
      * @returns A NextResponse object for an error response.
      */
-    static error(error: ApiError): NextResponse {
+    static error(error: ApiError, headers: ResponseHeaders = {}): NextResponse {
         return NextResponse.json(
             {
                 success: false,
                 message: error.message,
                 errors: error.errors.length > 0 ? error.errors : undefined,
             },
-            { status: error.statusCode }
+            { status: error.statusCode, headers }
         );
     }
 
@@ -47,14 +49,14 @@ export class ApiResponse {
      * @param error - The error object, which can be an ApiError or any other error.
      * @returns A NextResponse object for the handled error.
      */
-    static handle(error: unknown): NextResponse {
+    static handle(error: unknown, headers: ResponseHeaders = {}): NextResponse {
         if (error instanceof ApiError) {
-            return ApiResponse.error(error);
+            return ApiResponse.error(error, headers);
         }
 
         console.error("UNHANDLED_API_ERROR:", error);
 
         const genericError = new ApiError(500, "Internal Server Error");
-        return ApiResponse.error(genericError);
+        return ApiResponse.error(genericError, headers);
     }
 }

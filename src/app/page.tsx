@@ -222,11 +222,11 @@ export default function Home() {
     <div className="flex flex-col min-h-dvh bg-background text-foreground">
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative w-full min-h-screen flex items-center justify-center text-center overflow-hidden">
+        <section className="relative w-full min-h-screen flex items-center justify-center text-center overflow-hidden pt-20">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background z-10"></div>
           <Image
             src="https://picsum.photos/seed/hero-bg/1920/1080"
-            alt="Abstract cybersecurity background"
+            alt="Abstract cybersecurity background with digital nodes and connections"
             fill
             className="object-cover z-0 opacity-20"
             data-ai-hint="cybersecurity abstract"
@@ -247,12 +247,12 @@ export default function Home() {
                  <Link href="#">Book a Demo</Link>
                </Button>
             </div>
-             <div className="mt-16 w-full max-w-6xl">
+             <div className="mt-12 md:mt-16 w-full max-w-6xl">
                 <p className="text-sm text-center uppercase text-muted-foreground tracking-widest mb-4">Trusted by industry leaders</p>
                  <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]">
                   <div className="flex w-max animate-scroll">
                       {[...clientLogos, ...clientLogos].map((client, index) => (
-                          <div key={index} className="relative flex-shrink-0 w-32 h-16 flex items-center justify-center mx-4">
+                          <div key={index} className="relative flex-shrink-0 w-24 md:w-32 h-16 flex items-center justify-center mx-2 md:mx-4">
                               <Image 
                                 src={client.src} 
                                 alt={client.alt}
@@ -299,7 +299,7 @@ export default function Home() {
         <section className="py-16 md:py-24">
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid lg:grid-cols-2 items-center gap-8 lg:gap-16">
-              <div className="space-y-4">
+              <div className="space-y-4 text-center lg:text-left">
                 <h2 className="text-3xl md:text-4xl font-bold font-headline tracking-tighter">
                   Numbers Don't Lie. <br />
                   <span className="relative">
@@ -313,10 +313,10 @@ export default function Home() {
                 </p>
                 <div className="grid grid-cols-2 lg:grid-cols-1 gap-8 pt-8">
                     <div key={stats[0].label}>
-                        <p className={`text-4xl font-bold ${stats[0].className || 'text-foreground'}`}>
+                        <p className={`text-3xl md:text-4xl font-bold ${stats[0].className || 'text-foreground'}`}>
                             {stats[0].value}
                         </p>
-                        <p className="text-muted-foreground">{stats[0].label}</p>
+                        <p className="text-muted-foreground text-sm md:text-base">{stats[0].label}</p>
                     </div>
                 </div>
               </div>
@@ -334,17 +334,17 @@ export default function Home() {
             </div>
             <div className="mt-12 grid grid-cols-1 md:grid-cols-4 gap-8">
                <div key={stats[1].label} className="text-center md:text-left">
-                  <p className={`text-4xl font-bold ${stats[1].className || 'text-foreground'}`}>
+                  <p className={`text-3xl md:text-4xl font-bold ${stats[1].className || 'text-foreground'}`}>
                     {stats[1].value}
                   </p>
-                  <p className="text-muted-foreground">{stats[1].label}</p>
+                  <p className="text-muted-foreground text-sm md:text-base">{stats[1].label}</p>
                 </div>
               {stats.slice(2).map((stat) => (
                 <div key={stat.label} className="text-center md:text-left">
-                  <p className={`text-4xl font-bold ${stat.className || 'text-foreground'}`}>
+                  <p className={`text-3xl md:text-4xl font-bold ${stat.className || 'text-foreground'}`}>
                     {stat.value}
                   </p>
-                  <p className="text-muted-foreground">{stat.label}</p>
+                  <p className="text-muted-foreground text-sm md:text-base">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -358,42 +358,42 @@ export default function Home() {
                   <h2 className="text-3xl md:text-4xl font-bold font-headline">How We <span className="relative">Do It<span className="absolute left-0 bottom-0 w-full h-1 bg-primary/50 -mb-1"></span></span></h2>
               </div>
               <div className="relative">
-                {/* Vertical Line */}
-                <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 hidden md:block" aria-hidden="true"></div>
+                {/* Vertical Line for Desktop */}
+                <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20" aria-hidden="true"></div>
 
                 {timelineItems.map((item, index) => {
                   const Icon = item.icon;
                   const isLeft = item.side === 'left';
                   return (
-                    <div key={index} className={`mb-0 md:mb-0 ${index === 1 || index === 2 || index === 3 || index === 4 ? 'md:mt-24' : ''}`}>
-                      <div className="flex md:items-center flex-col md:flex-row">
-                        {/* Content Block */}
-                        <div className={`w-full md:w-1/2 ${isLeft ? 'md:pr-8 md:text-right' : 'md:pl-8 md:text-left'} ${isLeft ? 'order-1' : 'order-3'}`}>
-                            <div className={`flex items-center gap-4 mb-2 md:inline-flex ${isLeft ? 'md:flex-row-reverse' : ''}`}>
-                              <Icon className="w-8 h-8 text-primary" />
-                              <h3 className="text-xl font-bold text-foreground">{item.title}</h3>
+                     <div key={index} className="mb-12 md:mb-0">
+                        <div className="flex md:items-center flex-col md:flex-row">
+                          
+                          {/* Content Block (Left on Desktop) */}
+                          <div className={`w-full md:w-1/2 ${isLeft ? 'md:pr-8' : 'md:pl-8'} ${isLeft ? 'md:text-right order-1' : 'order-3'}`}>
+                             <div className={`pl-12 md:pl-0 md:inline-block`}>
+                                <div className={`flex items-center gap-4 mb-2 md:inline-flex ${isLeft ? 'md:flex-row-reverse' : ''}`}>
+                                  <Icon className="w-8 h-8 text-primary" />
+                                  <h3 className="text-xl font-bold text-foreground">{item.title}</h3>
+                                </div>
+                                <p className="text-muted-foreground">{item.description}</p>
                             </div>
-                            <p className="text-muted-foreground">{item.description}</p>
-                        </div>
-
-                        {/* Dot and Horizontal Line */}
-                        <div className="w-full md:w-auto order-2 my-4 md:my-0">
-                          <div className="flex items-center">
-                            <div className={`w-1/2 h-0.5 bg-primary/20 ${isLeft ? '' : 'hidden md:block'}`}></div>
-                            <div className="flex-shrink-0 w-4 h-4 rounded-full bg-primary ring-4 ring-background"></div>
-                            <div className={`w-1/2 h-0.5 bg-primary/20 ${!isLeft ? '' : 'hidden md:block'}`}></div>
                           </div>
-                        </div>
 
-                        {/* Spacer */}
-                        <div className={`w-full md:w-1/2 ${isLeft ? 'order-3' : 'order-1'}`}></div>
+                          {/* Dot */}
+                          <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-full md:w-auto order-2 my-4 md:my-0">
+                              <div className="flex-shrink-0 w-4 h-4 rounded-full bg-primary ring-4 ring-background"></div>
+                          </div>
+
+                          {/* Spacer/Empty Block */}
+                          <div className={`w-full md:w-1/2 ${isLeft ? 'order-3' : 'order-1'}`}></div>
+                        </div>
                       </div>
-                    </div>
                   );
                 })}
               </div>
             </div>
         </section>
+
 
         {/* Mission Section */}
         <section className="py-16 md:py-24 bg-card/5">
@@ -442,7 +442,7 @@ export default function Home() {
         <section className="py-16 md:py-24">
           <div className="container mx-auto px-4 md:px-6 relative min-h-[400px]">
               <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-                  <div className="text-8xl font-bold text-gray-800/10 opacity-50 whitespace-nowrap -rotate-6 scale-150">
+                  <div className="text-6xl md:text-8xl font-bold text-gray-800/10 opacity-50 whitespace-nowrap -rotate-6 scale-150">
                       FINTECH LOGISTICS HEALTHCARE RECRUITECH ECOMMERCE
                   </div>
               </div>
@@ -483,22 +483,20 @@ export default function Home() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     {teamMembers.map(member => (
                        <div key={member.name} className="bg-background text-foreground p-1 rounded border hover:shadow-[0px_0px_20px_0px_rgba(0,255,178,0.15)] border-border/20 overflow-hidden">
-                        <Image 
-                            alt={member.name} 
-                            loading="lazy" 
-                            width="250" 
-                            height="200" 
-                            decoding="async" 
-                            className="object-cover w-[200px] h-[200px] rounded mix-blend-luminosity hover:mix-blend-multiply" 
-                            src={member.image} 
-                            style={{color: "transparent"}}
+                        <Image
+                            alt={member.name}
+                            loading="lazy"
+                            width="200"
+                            height="200"
+                            className="object-cover w-full h-auto rounded mix-blend-luminosity hover:mix-blend-multiply"
+                            src={member.image}
                           />
                         <div className="p-4 flex justify-between items-center">
                           <div>
                             <h3 className="text-lg">{member.name}</h3>
                             <p className="opacity-[0.8] text-sm">{member.role}</p>
                           </div>
-                          <a href={member.linkedin} target="_blank" className="">
+                          <a href={member.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`Link to ${member.name}'s LinkedIn profile`}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
                               <path d="M6.94048 5.78313C6.94011 6.59744 6.44608 7.33022 5.69134 7.63593C4.9366 7.94165 4.07187 7.75925 3.5049 7.17475C2.93793 6.59024 2.78195 5.72035 3.1105 4.97527C3.43906 4.23019 4.18654 3.7587 5.00048 3.78313C6.08155 3.81558 6.94097 4.70157 6.94048 5.78313ZM7.00048 9.26313H3.00048V21.7831H7.00048V9.26313ZM13.3205 9.26313H9.34048V21.7831H13.2805V15.2131C13.2805 11.5531 18.0505 11.2131 18.0505 15.2131V21.7831H22.0005V13.8531C22.0005 7.68313 14.9405 7.91313 13.2805 10.9431L13.3205 9.26313Z" fill="currentColor"></path>
                             </svg>
@@ -600,9 +598,9 @@ export default function Home() {
 
             <div className="md:col-span-2 flex md:justify-end items-start">
                <div className="flex items-center gap-4">
-                  <Link href="#" className="text-muted-foreground hover:text-primary"><LinkedinIcon className="w-5 h-5" /></Link>
-                  <Link href="#" className="text-muted-foreground hover:text-primary"><TwitterIcon className="w-5 h-5" /></Link>
-                  <Link href="#" className="text-muted-foreground hover:text-primary"><YoutubeIcon className="w-5 h-5" /></Link>
+                  <Link href="#" aria-label="LinkedIn" className="text-muted-foreground hover:text-primary"><LinkedinIcon className="w-5 h-5" /></Link>
+                  <Link href="#" aria-label="Twitter" className="text-muted-foreground hover:text-primary"><TwitterIcon className="w-5 h-5" /></Link>
+                  <Link href="#" aria-label="Youtube" className="text-muted-foreground hover:text-primary"><YoutubeIcon className="w-5 h-5" /></Link>
                </div>
             </div>
           </div>
@@ -672,7 +670,7 @@ const TestimonialCarousel = ({ testimonials }: { testimonials: any[] }) => {
                 {testimonials.map((testimonial, index) => (
                     <CarouselItem key={index}>
                         <div className="p-1">
-                            <Card className="bg-primary/5 border-primary/20 p-8 rounded-lg">
+                            <Card className="bg-primary/5 border-primary/20 p-6 md:p-8 rounded-lg">
                                 <CardContent className="p-0 relative">
                                     <span className="absolute -top-4 -left-4 text-6xl text-primary/20 font-serif">“</span>
                                     <p className="text-muted-foreground z-10 relative">
@@ -692,8 +690,8 @@ const TestimonialCarousel = ({ testimonials }: { testimonials: any[] }) => {
                     </CarouselItem>
                 ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+            <CarouselPrevious className='hidden md:inline-flex'/>
+            <CarouselNext className='hidden md:inline-flex'/>
         </Carousel>
         <div className="testimonial-dots">
             {testimonials.map((_, index) => (
@@ -701,6 +699,7 @@ const TestimonialCarousel = ({ testimonials }: { testimonials: any[] }) => {
                     key={index}
                     onClick={() => api?.scrollTo(index)}
                     className={`dot ${current === index ? 'dot--active' : ''}`}
+                    aria-label={`Go to slide ${index + 1}`}
                 />
             ))}
         </div>
@@ -733,3 +732,6 @@ function YoutubeIcon(props: React.SVGProps<SVGSVGElement>) {
         </svg>
     )
 }
+
+
+    

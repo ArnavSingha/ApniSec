@@ -1,3 +1,4 @@
+
 import mongoose, { Schema, Document } from 'mongoose';
 
 // Define the TypeScript interface for the User document
@@ -5,6 +6,15 @@ export interface IUser extends Document {
   name: string;
   email: string;
   password?: string; // Password is required for creation but should not always be returned
+  forgotPasswordToken?: string;
+  forgotPasswordTokenExpiry?: Date;
+  dob?: Date;
+  gender?: 'Male' | 'Female' | 'Other' | 'Prefer not to say';
+  phoneNumber?: string;
+  companyUrl?: string;
+  jobTitle?: string;
+  bio?: string;
+  country?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -28,6 +38,30 @@ const UserSchema: Schema = new Schema(
       type: String,
       required: [true, 'Password is required'],
       select: false, // Automatically exclude password from query results
+    },
+    forgotPasswordToken: String,
+    forgotPasswordTokenExpiry: Date,
+    dob: {
+      type: Date,
+    },
+    gender: {
+      type: String,
+      enum: ['Male', 'Female', 'Other', 'Prefer not to say'],
+    },
+    phoneNumber: {
+      type: String,
+    },
+    companyUrl: {
+      type: String,
+    },
+    jobTitle: {
+      type: String,
+    },
+    bio: {
+      type: String,
+    },
+    country: {
+      type: String,
     },
   },
   {

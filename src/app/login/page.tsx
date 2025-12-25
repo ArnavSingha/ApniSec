@@ -11,16 +11,18 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import Link from 'next/link';
+import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email address.' }),
-  password: z.string().min(1, { message: 'Password is required.' }),
+  password: z.string().min(8, { message: 'Password must be at least 8 characters.' }),
 });
 
 export default function LoginPage() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -56,7 +58,11 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex items-center justify-center min-h-screen p-4">
+    <main className="flex items-center justify-center min-h-screen p-4 bg-background">
+       <Button variant="ghost" className="absolute top-4 left-4" onClick={() => router.back()}>
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back
+        </Button>
       <Card className="w-full max-w-md glass-panel">
         <CardHeader>
           <CardTitle className="text-2xl font-bold font-headline text-center">Welcome Back</CardTitle>
@@ -89,13 +95,32 @@ export default function LoginPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" placeholder="********" {...field} />
-                    </FormControl>
+                    <div className="relative">
+                      <FormControl>
+                        <Input
+                          type={showPassword ? 'text' : 'password'}
+                          placeholder="********"
+                          {...field}
+                          className="pr-10"
+                        />
+                      </FormControl>
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground"
+                      >
+                        {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                      </button>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+              <div className="text-right text-sm">
+                <Link href="/forgot-password" passHref className="text-primary hover:underline">
+                  Forgot password?
+                </Link>
+              </div>
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? 'Signing In...' : 'Sign In'}
               </Button>

@@ -1,14 +1,18 @@
 import { UserRepository } from '@/lib/modules/users/UserRepository';
 import { ApiError } from '@/lib/core/ApiError';
 import { JwtManager } from '@/lib/security/JwtManager';
-import { Resend } from 'resend';
+import { EmailService } from '@/lib/services/EmailService';
 import bcrypt from 'bcryptjs';
-
-const resendApiKey = process.env.RESEND_API_KEY;
-const resend = resendApiKey ? new Resend(resendApiKey) : null;
-
+import crypto from 'crypto';
+import 'dotenv/config';
 
 export class AuthService {
+    private emailService: EmailService;
+
+    constructor() {
+        this.emailService = new EmailService();
+    }
+    
     /**
      * Registers a new user.
      * @param name - The user's name.
@@ -30,22 +34,7 @@ export class AuthService {
             password: hashedPassword,
         });
         
-        if (resend) {
-            try {
-                await resend.emails.send({
-                    from: 'onboarding@resend.dev',
-                    to: email,
-                    subject: 'Welcome to ApniSec!',
-                    html: `<h1>Welcome, ${name}!</h1><p>Thank you for joining ApniSec.</p>`,
-                });
-            } catch (error) {
-                console.error('Resend API Error:', error);
-                // Non-fatal error, we can still proceed with user creation.
-            }
-        } else {
-            console.log("Resend API key not configured. Skipping welcome email.");
-        }
-
+        await this.emailService.sendWelcomeEmail(email, name);
 
         // Exclude password from the returned user object
         const userObject = newUser.toObject();
@@ -75,6 +64,84 @@ export class AuthService {
         const userObject = user.toObject();
         delete userObject.password;
 
+        const accessToken = await JwtManager.sign({ userId: user._id });
+
+        return { accessToken, user: userObject };
+    }
+
+    /**
+     * Retrieves the current user's data based on a valid JWT.
+     * @param token - The JWT access token.
+     * @returns The user's data (excluding the password).
+     */
+    public async getCurrentUser(token: string) {
+        const payload = await JwtManager.verify(token);
+        if (!payload || !payload.userId) {
+            throw new ApiError(401, 'Invalid or expired authentication token.');
+        }
+
+        const user = await UserRepository.findById(payload.userId);
+        if (!user) {
+            throw new ApiError(404, 'User not found.');
+        }
+
+        const userObject = user.toObject();
+        delete userObject.password;
+
+        return userObject;
+    }
+
+    /**
+     * Generates a password reset token and sends it via email.
+     * @param email The user's email address.
+     * @param origin The origin URL of the request (e.g., https://yourapp.com)
+     */
+    public async sendPasswordResetEmail(email: string, origin: string) {
+        const user = await UserRepository.findByEmail(email);
+        if (!user) {
+            // Don't reveal that the user does not exist
+            console.log(`Password reset attempt for non-existent user: ${email}`);
+            return;
+        }
+
+        const resetToken = crypto.randomBytes(32).toString('hex');
+        const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+        user.forgotPasswordToken = hashedToken;
+        user.forgotPasswordTokenExpiry = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+        await user.save();
+
+        if (!origin) {
+            throw new ApiError(500, 'Could not determine application origin.');
+        }
+
+        const resetUrl = `${origin}/reset-password?token=${resetToken}`;
+        await this.emailService.sendPasswordResetEmail(email, resetUrl);
+    }
+
+    /**
+     * Resets a user's password using a valid token.
+     * @param token The password reset token from the URL.
+     * @param newPassword The new password.
+     */
+    public async resetPassword(token: string, newPassword: string) {
+        const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+        const user = await UserRepository.findByPasswordResetToken(hashedToken);
+        
+        if (!user) {
+            throw new ApiError(400, 'Invalid or expired password reset token.');
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        user.password = hashedPassword;
+        user.forgotPasswordToken = undefined;
+        user.forgotPasswordTokenExpiry = undefined;
+        await user.save();
+
+        // Automatically log the user in
+        const userObject = user.toObject();
+        delete userObject.password;
         const accessToken = await JwtManager.sign({ userId: user._id });
 
         return { accessToken, user: userObject };
