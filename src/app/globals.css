@@ -90,6 +90,25 @@
   .animate-scroll {
     animation: scroll 40s linear infinite;
   }
+  .testimonial-carousel .embla__button {
+    @apply h-12 w-12 rounded-full bg-background border border-primary/10 text-primary shadow-md;
+    @apply hover:bg-primary/10;
+  }
+  .testimonial-carousel .embla__button--prev {
+    @apply -left-6;
+  }
+  .testimonial-carousel .embla__button--next {
+    @apply -right-6;
+  }
+  .testimonial-dots {
+    @apply flex gap-2 justify-end items-center mt-4;
+  }
+  .testimonial-dots .dot {
+    @apply w-2 h-2 rounded-full bg-muted-foreground/40 transition-all duration-300;
+  }
+  .testimonial-dots .dot.dot--active {
+    @apply w-4 h-1.5 bg-primary;
+  }
 }
 
 @keyframes scroll {
@@ -99,4 +118,27 @@
   to {
     transform: translateX(-100%);
   }
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(5px, 10px) rotate(2deg);
+  }
+  50% {
+    transform: translate(10px, 5px) rotate(0deg);
+  }
+  75% {
+    transform: translate(5px, -5px) rotate(-2deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+.bubble {
+  animation: float linear infinite;
+  @apply rounded-full bg-primary/10 p-4 border border-primary/20 backdrop-blur-sm shadow-lg;
 }

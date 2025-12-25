@@ -1,4 +1,8 @@
+
+
+'use client';
 import Image from 'next/image';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -6,6 +10,8 @@ import { Check, ArrowRight, Award, TrendingUp, Handshake, BrainCircuit, Shield, 
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import DraggableBubble from '@/components/DraggableBubble';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
 
 export default function Home() {
     const dashboardImage = PlaceHolderImages.find(p => p.id === 'dashboard-dark');
@@ -126,31 +132,37 @@ export default function Home() {
   ];
 
   const securedBrands = [
-      { src: "https://assets.apnisec.com/public/apnisec-ui/home/brands/oziva.svg", alt: "Oziva" },
-      { src: "https://assets.apnisec.com/public/apnisec-ui/home/brands/blackbuck.svg", alt: "Blackbuck" },
-      { src: "https://assets.apnisec.com/public/apnisec-ui/home/brands/livspace.svg", alt: "Livspace" },
-      { src: "https://assets.apnisec.com/public/apnisec-ui/home/brands/axio.svg", alt: "Axio" },
-      { src: "https://assets.apnisec.com/public/apnisec-ui/home/brands/rangde.svg", alt: "RangDe" },
-      { src: "https://assets.apnisec.com/public/apnisec-ui/home/brands/workindia.svg", alt: "WorkIndia" },
-      { src: "https://assets.apnisec.com/public/apnisec-ui/home/brands/tribijte.svg", alt: "TriBijte" },
-      { src: "https://assets.apnisec.com/public/apnisec-ui/home/brands/freshtohome.svg", alt: "Fresh to Home" },
-      { src: "https://assets.apnisec.com/public/apnisec-ui/home/brands/precisa.svg", alt: "Precisa" },
-      { src: "https://assets.apnisec.com/public/apnisec-ui/home/brands/tanx.svg", alt: "TanX" },
-      { src: "https://assets.apnisec.com/public/apnisec-ui/home/brands/purplle.svg", alt: "Purplle" },
-      { src: "https://assets.apnisec.com/public/apnisec-ui/home/brands/mcaffeine.svg", alt: "mCaffeine" },
-      { src: "https://assets.apnisec.com/public/apnisec-ui/home/brands/truemeds.svg", alt: "Truemeds" },
-      { src: "https://assets.apnisec.com/public/apnisec-ui/home/brands/atvacare.svg", alt: "Atvacare" },
-      { src: "https://assets.apnisec.com/public/apnisec-ui/home/brands/crowdchem.svg", alt: "CrowdChem" }
+    { src: "https://assets.apnisec.com/public/apnisec-ui/brands/oziva.svg", alt: "oziva" },
+    { src: "https://assets.apnisec.com/public/apnisec-ui/brands/blackbuck.svg", alt: "blackbuck" },
+    { src: "https://assets.apnisec.com/public/apnisec-ui/brands/livspace.svg", alt: "livspace" },
+    { src: "https://assets.apnisec.com/public/apnisec-ui/brands/axio.svg", alt: "axio" },
+    { src: "https://assets.apnisec.com/public/apnisec-ui/brands/wearerangde.svg", alt: "wearerangde" },
+    { src: "https://assets.apnisec.com/public/apnisec-ui/brands/workindia.svg", alt: "workindia" },
+    { src: "https://assets.apnisec.com/public/apnisec-ui/brands/tribytey.svg", alt: "tribytey" },
+    { src: "https://assets.apnisec.com/public/apnisec-ui/brands/freshtohome.svg", alt: "freshtohome" },
+    { src: "https://assets.apnisec.com/public/apnisec-ui/brands/preciisa.svg", alt: "preciisa" },
+    { src: "https://assets.apnisec.com/public/apnisec-ui/brands/tanx.svg", alt: "tanx" },
+    { src: "https://assets.apnisec.com/public/apnisec-ui/brands/purplle.svg", alt: "purplle" },
+    { src: "https://assets.apnisec.com/public/apnisec-ui/brands/mcaffeine.svg", alt: "mcaffeine" },
+    { src: "https://assets.apnisec.com/public/apnisec-ui/brands/truemeds.svg", alt: "truemeds" },
+    { src: "https://assets.apnisec.com/public/apnisec-ui/brands/tatvacare.svg", alt: "tatvacare" },
+    { src: "https://assets.apnisec.com/public/apnisec-ui/brands/crowdchem.svg", alt: "crowdchem" }
   ];
   
   const teamMembers = [
-    { name: "Anubhav Singh", role: "Founder & CEO", image: "https://picsum.photos/seed/team1/200/200" },
-    { name: "Anurag Singh", role: "Co-Founder & CTO", image: "https://picsum.photos/seed/team2/200/200" },
-    { name: "Sameer Kumar", role: "Head of Security", image: "https://picsum.photos/seed/team3/200/200" },
-    { name: "Aman Tiwari", role: "Principal Security Engineer", image: "https://picsum.photos/seed/team4/200/200" },
+    { name: "Rajat Moury", role: "Founder", image: "https://assets.apnisec.com/public/apnisec-ui/home/team/rajat.svg", linkedin: "https://www.linkedin.com/in/rajatmoury/" },
+    { name: "Muthu D", role: "Security Engineer", image: "https://assets.apnisec.com/public/apnisec-ui/home/team/muthu.svg", linkedin: "#" },
+    { name: "Atish Thakur", role: "Software Engineer", image: "https://assets.apnisec.com/public/apnisec-ui/home/team/atish.svg", linkedin: "#" },
+    { name: "Nishan Agarwal", role: "UI/UX Designer", image: "https://assets.apnisec.com/public/apnisec-ui/home/team/nishan.svg", linkedin: "#" },
   ];
   
   const testimonials = [
+    {
+      name: 'Moiz Arsiwala',
+      role: 'Co-founder',
+      text: "Working with Apni has been a game-changer for our organization. Their penetration testing services provided us with critical insights into our vulnerabilities, allowing us to strengthen our defenses before any real threats emerged. The risk assessment process was thorough and eye-opening, identifying potential gaps we hadn't considered. Most importantly, their mitigation strategies were practical,...",
+      avatar: 'https://i.imgur.com/A52yvct.png'
+    },
     {
       name: 'Aditya Sharma',
       role: 'CTO, InnovateTech',
@@ -205,7 +217,7 @@ export default function Home() {
       side: "left",
     },
   ];
-
+  
   return (
     <div className="flex flex-col min-h-dvh bg-background text-foreground">
       <main className="flex-1">
@@ -428,39 +440,71 @@ export default function Home() {
         
         {/* Secured Brands Section */}
         <section className="py-16 md:py-24">
-            <div className="container mx-auto px-4 md:px-6 relative">
-                <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-                    <div className="text-8xl font-bold text-gray-800/10 opacity-50 whitespace-nowrap -rotate-6 scale-150">
-                        FINTECH LOGISTICS HEALTHCARE RECRUITECH ECOMMERCE
-                    </div>
-                </div>
-                <div className="relative z-10">
-                    <h2 className="text-center text-3xl font-bold font-headline mb-4">
-                        Our <span className="relative">Secured Brands<span className="absolute left-0 bottom-0 w-full h-1 bg-primary/50 -mb-1"></span></span>
-                    </h2>
-                    <p className="text-center text-muted-foreground mb-12">Retained 100% Customers Since Inception From Various Industries</p>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-x-8 gap-y-12 items-center">
-                        {securedBrands.map((logo, index) => (
-                            <div key={index} className="relative h-12 flex justify-center items-center">
-                              <Image src={logo.src} alt={logo.alt} fill className="object-contain" />
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
+          <div className="container mx-auto px-4 md:px-6 relative min-h-[400px]">
+              <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+                  <div className="text-8xl font-bold text-gray-800/10 opacity-50 whitespace-nowrap -rotate-6 scale-150">
+                      FINTECH LOGISTICS HEALTHCARE RECRUITECH ECOMMERCE
+                  </div>
+              </div>
+              <div className="relative z-10 text-center">
+                  <h2 className="text-3xl font-bold font-headline mb-4">
+                      Our <span className="relative">Secured Brands<span className="absolute left-0 bottom-0 w-full h-1 bg-primary/50 -mb-1"></span></span>
+                  </h2>
+                  <p className="text-muted-foreground mb-12">Retained 100% Customers Since Inception From Various Industries</p>
+              </div>
+              <div className="absolute inset-0 top-32">
+                {securedBrands.map((logo, index) => {
+                  return (
+                    <DraggableBubble
+                      key={index}
+                      animationDuration={15 + Math.random() * 10}
+                      animationDelay={Math.random() * 15}
+                      size={80 + Math.random() * 40}
+                    >
+                      <Image 
+                        src={logo.src} 
+                        alt={logo.alt} 
+                        fill
+                        className="w-full h-full object-contain p-2 pointer-events-none"
+                      />
+                    </DraggableBubble>
+                  );
+                })}
+              </div>
+          </div>
         </section>
 
         {/* Team Section */}
         <section className="py-16 md:py-24 bg-card/5">
             <div className="container mx-auto px-4 md:px-6">
-                <h2 className="text-center text-3xl font-bold font-headline mb-12">Meet Our Team</h2>
+                <h2 className="text-center text-3xl font-bold font-headline mb-12">
+                  Meet Our <span className="relative">Team<span className="absolute left-0 bottom-0 w-full h-1 bg-primary/50 -mb-1"></span></span>
+                </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     {teamMembers.map(member => (
-                        <div key={member.name} className="text-center">
-                            <Image src={member.image} alt={member.name} width={150} height={150} className="rounded-full mx-auto mb-4 border-4 border-primary/50" />
-                            <h3 className="font-bold text-lg">{member.name}</h3>
-                            <p className="text-muted-foreground">{member.role}</p>
+                       <div key={member.name} className="bg-background text-foreground p-1 rounded border hover:shadow-[0px_0px_20px_0px_rgba(0,255,178,0.15)] border-border/20 overflow-hidden">
+                        <Image 
+                            alt={member.name} 
+                            loading="lazy" 
+                            width="250" 
+                            height="200" 
+                            decoding="async" 
+                            className="object-cover w-[200px] h-[200px] rounded mix-blend-luminosity hover:mix-blend-multiply" 
+                            src={member.image} 
+                            style={{color: "transparent"}}
+                          />
+                        <div className="p-4 flex justify-between items-center">
+                          <div>
+                            <h3 className="text-lg">{member.name}</h3>
+                            <p className="opacity-[0.8] text-sm">{member.role}</p>
+                          </div>
+                          <a href={member.linkedin} target="_blank" className="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                              <path d="M6.94048 5.78313C6.94011 6.59744 6.44608 7.33022 5.69134 7.63593C4.9366 7.94165 4.07187 7.75925 3.5049 7.17475C2.93793 6.59024 2.78195 5.72035 3.1105 4.97527C3.43906 4.23019 4.18654 3.7587 5.00048 3.78313C6.08155 3.81558 6.94097 4.70157 6.94048 5.78313ZM7.00048 9.26313H3.00048V21.7831H7.00048V9.26313ZM13.3205 9.26313H9.34048V21.7831H13.2805V15.2131C13.2805 11.5531 18.0505 11.2131 18.0505 15.2131V21.7831H22.0005V13.8531C22.0005 7.68313 14.9405 7.91313 13.2805 10.9431L13.3205 9.26313Z" fill="currentColor"></path>
+                            </svg>
+                          </a>
                         </div>
+                      </div>
                     ))}
                 </div>
             </div>
@@ -469,23 +513,10 @@ export default function Home() {
         {/* Testimonials Section */}
         <section className="py-16 md:py-24">
             <div className="container mx-auto px-4 md:px-6">
-                <h2 className="text-center text-3xl font-bold font-headline mb-12">Our Valued Clients Speak</h2>
-                <div className="grid lg:grid-cols-2 gap-8">
-                    {testimonials.map((testimonial, index) => (
-                        <Card key={index} className="glass-panel p-6">
-                           <CardContent className="p-0">
-                             <div className="flex items-center mb-4">
-                               <Image src={testimonial.avatar} alt={testimonial.name} width={48} height={48} className="rounded-full mr-4" />
-                               <div>
-                                 <h4 className="font-bold">{testimonial.name}</h4>
-                                 <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                               </div>
-                             </div>
-                             <p className="text-muted-foreground italic">"{testimonial.text}"</p>
-                           </CardContent>
-                        </Card>
-                    ))}
-                </div>
+                <h2 className="text-center text-3xl font-bold font-headline mb-12">
+                    Our secured <span className="relative">Client's<span className="absolute left-0 bottom-0 w-full h-1 bg-primary/50 -mb-1"></span></span> says it all
+                </h2>
+                <TestimonialCarousel testimonials={testimonials} />
             </div>
         </section>
 
@@ -525,42 +556,63 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="py-12 border-t border-white/10 bg-card/5">
+      <footer className="py-12 bg-background border-t border-border">
         <div className="container mx-auto px-4 md:px-6">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div className="lg:col-span-1">
-                    <Link href="/" className="flex items-center gap-2 mb-4">
-                        <Shield className="w-6 h-6 text-primary" />
-                        <span className="text-xl font-bold font-headline">ApniSec</span>
-                    </Link>
-                    <p className="text-muted-foreground text-sm">Proactive Cybersecurity for the Modern Web.</p>
-                </div>
-                <div>
-                    <h4 className="font-bold mb-4">Services</h4>
-                    <ul className="space-y-2 text-sm">
-                        <li><Link href="#" className="text-muted-foreground hover:text-primary">Cloud Security</Link></li>
-                        <li><Link href="#" className="text-muted-foreground hover:text-primary">Red Team Assessment</Link></li>
-                        <li><Link href="#" className="text-muted-foreground hover:text-primary">VAPT</Link></li>
-                        <li><Link href="#" className="text-muted-foreground hover:text-primary">AI-Powered Defense</Link></li>
-                    </ul>
-                </div>
-                <div>
-                     <h4 className="font-bold mb-4">Company</h4>
-                    <ul className="space-y-2 text-sm">
-                        <li><Link href="#" className="text-muted-foreground hover:text-primary">About Us</Link></li>
-                        <li><Link href="#" className="text-muted-foreground hover:text-primary">Careers</Link></li>
-                        <li><Link href="#" className="text-muted-foreground hover:text-primary">Blog</Link></li>
-                        <li><Link href="#" className="text-muted-foreground hover:text-primary">Contact</Link></li>
-                    </ul>
-                </div>
-                <div className="glass-panel p-6 rounded-lg md:col-span-2 lg:col-span-1">
-                     <h4 className="font-bold mb-4">Protect Your Data Now</h4>
-                     <p className="text-sm text-muted-foreground mb-4">Get a free consultation and see how we can secure your business.</p>
-                     <Button className="w-full bg-primary/90 text-primary-foreground hover:bg-primary/80">Get Started</Button>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+            <div className="md:col-span-4">
+              <Link href="/" className="flex items-center gap-2 mb-4">
+                <Shield className="w-8 h-8 text-primary" />
+                <span className="text-2xl font-bold font-headline">ApniSec</span>
+              </Link>
             </div>
-          <div className="mt-8 border-t border-white/10 pt-6 text-center text-muted-foreground text-sm">
-            <p>&copy; {new Date().getFullYear()} ApniSec. All Rights Reserved.</p>
+
+            <div className="md:col-span-2 md:col-start-7">
+              <h4 className="font-bold mb-4">Company</h4>
+              <ul className="space-y-3 text-sm">
+                <li><Link href="#" className="text-muted-foreground hover:text-primary">Home</Link></li>
+                <li><Link href="#" className="text-muted-foreground hover:text-primary">Solutions</Link></li>
+                <li><Link href="#" className="text-muted-foreground hover:text-primary">Process</Link></li>
+                <li><Link href="#" className="text-muted-foreground hover:text-primary">Report</Link></li>
+                <li><Link href="#" className="text-muted-foreground hover:text-primary">Services</Link></li>
+                <li>
+                  <Link href="#" className="flex items-center gap-2 text-muted-foreground hover:text-primary">
+                    Careers <Badge variant="outline" className="bg-green-400/20 text-green-400 border-green-400/30">Active</Badge>
+                  </Link>
+                </li>
+                 <li>
+                  <Link href="#" className="flex items-center gap-2 text-muted-foreground hover:text-primary">
+                    Bug Bounty <Badge variant="outline" className="bg-green-400/20 text-green-400 border-green-400/30">Active</Badge>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div className="md:col-span-2">
+              <h4 className="font-bold mb-4">Services</h4>
+              <ul className="space-y-3 text-sm">
+                <li><Link href="#" className="text-muted-foreground hover:text-primary">Dark Eye Watcher</Link></li>
+                <li><Link href="#" className="text-muted-foreground hover:text-primary">Cloud Security</Link></li>
+                <li><Link href="#" className="text-muted-foreground hover:text-primary">Virtual CISO</Link></li>
+                <li><Link href="#" className="text-muted-foreground hover:text-primary">Red Team Assessment</Link></li>
+                <li><Link href="#" className="text-muted-foreground hover:text-primary">VAPT</Link></li>
+              </ul>
+            </div>
+
+            <div className="md:col-span-2 flex md:justify-end items-start">
+               <div className="flex items-center gap-4">
+                  <Link href="#" className="text-muted-foreground hover:text-primary"><LinkedinIcon className="w-5 h-5" /></Link>
+                  <Link href="#" className="text-muted-foreground hover:text-primary"><TwitterIcon className="w-5 h-5" /></Link>
+                  <Link href="#" className="text-muted-foreground hover:text-primary"><YoutubeIcon className="w-5 h-5" /></Link>
+               </div>
+            </div>
+          </div>
+          
+          <div className="mt-12 border-t border-border pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
+            <p>&copy; {new Date().getFullYear()} Apni Sec. All rights reserved.</p>
+            <div className="flex gap-4 mt-4 md:mt-0">
+               <Link href="#" className="hover:text-primary">Privacy Policy</Link>
+               <Link href="#" className="hover:text-primary">Terms And Conditions</Link>
+            </div>
           </div>
         </div>
       </footer>
@@ -597,4 +649,87 @@ const ServiceCard = ({ service }: { service: any }) => {
       </div>
     </Card>
   )
+}
+
+const TestimonialCarousel = ({ testimonials }: { testimonials: any[] }) => {
+  const [api, setApi] = React.useState<CarouselApi>()
+  const [current, setCurrent] = React.useState(0)
+
+  React.useEffect(() => {
+    if (!api) {
+      return
+    }
+    setCurrent(api.selectedScrollSnap())
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap())
+    })
+  }, [api])
+
+  return (
+    <div>
+        <Carousel setApi={setApi} className="testimonial-carousel" opts={{ loop: true }}>
+            <CarouselContent>
+                {testimonials.map((testimonial, index) => (
+                    <CarouselItem key={index}>
+                        <div className="p-1">
+                            <Card className="bg-primary/5 border-primary/20 p-8 rounded-lg">
+                                <CardContent className="p-0 relative">
+                                    <span className="absolute -top-4 -left-4 text-6xl text-primary/20 font-serif">“</span>
+                                    <p className="text-muted-foreground z-10 relative">
+                                        {testimonial.text}
+                                        <Link href="#" className="text-primary font-medium ml-1">Read More</Link>
+                                    </p>
+                                    <div className="flex items-center mt-6">
+                                        <Image src={testimonial.avatar} alt={testimonial.name} width={48} height={48} className="rounded-full mr-4" />
+                                        <div>
+                                            <h4 className="font-bold">{testimonial.name}</h4>
+                                            <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </div>
+                    </CarouselItem>
+                ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+        </Carousel>
+        <div className="testimonial-dots">
+            {testimonials.map((_, index) => (
+                <button
+                    key={index}
+                    onClick={() => api?.scrollTo(index)}
+                    className={`dot ${current === index ? 'dot--active' : ''}`}
+                />
+            ))}
+        </div>
+    </div>
+  )
+}
+
+function LinkedinIcon(props: React.SVGProps<SVGSVGElement>) {
+    return (
+      <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+        <rect width="4" height="12" x="2" y="9" />
+        <circle cx="4" cy="4" r="2" />
+      </svg>
+    )
+}
+
+function TwitterIcon(props: React.SVGProps<SVGSVGElement>) {
+    return (
+        <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+    )
+}
+  
+function YoutubeIcon(props: React.SVGProps<SVGSVGElement>) {
+    return (
+        <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+        </svg>
+    )
 }
